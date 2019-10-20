@@ -10,6 +10,7 @@ and open the template in the editor.
 
 body {
     padding-top: 90px;
+    background-image: url(../img/bg_img.jpeg);
 }
 .panel-login {
 	border-color: #ccc;
@@ -54,6 +55,10 @@ body {
 	-webkit-transition: all 0.1s linear;
 	-moz-transition: all 0.1s linear;
 	transition: all 0.1s linear;
+}
+/*Have the glow effect when user focus on inputs*/
+.panel-body input[type=text]:focus, textarea:focus{
+    box-shadow:0 0 5px rgba(81, 203, 238, 1);
 }
 .panel-login input:hover,
 .panel-login input:focus {
@@ -106,4 +111,82 @@ body {
 	color: #fff;
 	background-color: #1CA347;
 	border-color: #1CA347;
+}
+
+
+/*Required password CSS*/
+input:required:invalid, input:focus:invalid {
+    background-image: url(../img/exclamation-mark.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+  }
+  input:required:valid {
+    background-image: url(../img/checked.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+  }
+
+ /* Text to indicate the password strength */
+  .passwordIndicator{
+      font-size: 10px;
+      width: 100%;
+      text-align: left;
+  } 
+ 
+  /* Message at bottom of form*/
+.form .message{
+    margin: 15px 0 0;
+    font-size: 12px;
+    text-align: center;
+}
+/*Message at bottom of form*/
+.form .message a{
+    color: #4caf50;
+}
+  
+[data-tip]{
+    position: relative;
+}
+  [data-tip]:before {
+	content:'';
+	/* hides the tooltip when not hovered */
+	display:none;
+	content:'';
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #1a1a1a;	
+	position:absolute;
+	top:30px;
+	left:35px;
+	z-index:8;
+	font-size:0;
+	line-height:0;
+	width:0;
+	height:0;
+}
+[data-tip]:after {
+	display:none;
+	content:attr(data-tip);
+	position:absolute;
+	top:35px;
+	left:0px;
+	padding:5px 8px;
+	background:#1a1a1a;
+	color:#fff;
+	z-index:9;
+	font-size: 0.75em;
+	height:18px;
+	line-height:18px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	white-space:nowrap;
+	word-wrap:normal;
+}
+[data-tip]:hover:before,
+[data-tip]:hover:after {
+	display:block;
+        height: auto;
 }

@@ -46,7 +46,7 @@ and open the template in the editor.
 												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
 											</div>
 										</div>
-                                                                                <div class="row">
+                                                                                <div class="message">
                                                                                     <div class="col-sm-6 col-sm-offset-3">
                                                                                         <a href="register_form.php">New User? Register here</a>
                                                                                     </div>
