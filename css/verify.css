@@ -1,0 +1,29 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22 Oct, 2019, 1:24:29 AM
+    Author     : faiz_
+*/
+
+html, body {
+    
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    color: #444;
+    -webkit-font-smoothing: antialiased;
+    background: url(../img/bg_img.jpeg);
+    background-size: cover;
+    background-position: center;
+}
+/*Status msg to be displayed at top of html after record has been verified into the database */
+.statusmsg{
+    background-color: white;
+
+    text-align: center;
+
+    font-size: 40px;
+
+    padding: 10px 10px 10px 10px;
+}

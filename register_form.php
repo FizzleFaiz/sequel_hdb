@@ -61,46 +61,41 @@ and open the template in the editor.
 										<input type="email" name="email" id="email" tabindex="1" class="form-control" required placeholder="Email Address" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>">
                                                                                 <div style="<?php echo $emailStyle; ?>"> <?php echo $emailErr;?></div>
 									</div>
-                                                                        <div>
+                                                                        <div class = "form-group">
                                                                             <label>Marital Status</label>
                                                                             </br>
                                                                             <select id="married" name="married">
-                                                                                <option value ="S">Single</option>
-                                                                                <option value="M">Married</option>
+                                                                                <option value ="0">Single</option>
+                                                                                <option value="1">Married</option>
                                                                             </select>
                                                                             
                                                                         </div>
                                                                         
-                                                                        <div>
+                                                                        <div class = "form-group">
                                                                             <label>Citizenship</label>
                                                                             </br>
                                                                             <select id="citizen" name="citizen">
-                                                                                <option value ="S">Singaporean</option>
+                                                                                <option value ="Singaporean">Singaporean</option>
                                                                                 <option value="PR">Permanent Resident</option>
-                                                                                <option value="O">Other</option>
+                                                                                <option value="Other">Other</option>
                                                                             </select>
                                                                             
                                                                         </div>
                                                                     
-                                                                        <div>
-                                                                            <label>Income Status per month </label>
-                                                                            </br>
-                                                                            <select id="income" name="income">
-                                                                                <option value ="vl">Below $700</option>
-                                                                                <option value="l">$701 - $1500</option>
-                                                                                <option value="m">$1501 - $3000</option>
-                                                                                <option value="h">$3001 - $5000</option>
-                                                                                <option value="vh">Above $5000</option>
+                                                                        <div class="form-group" data-tip="Average gross monthly household income for 12 months prior">
+                                                                            <label>Income Status per month ($) </label>
+										<input type="text" name="income" id="name" tabindex="1" class="form-control" required placeholder="Income" value="<?php if (isset($_POST['income'])) echo $_POST['income']; ?>">
+                                                                                <div style="<?php echo $incomeStyle; ?>"> <?php echo $incomeErr;?></div> 
                                                                             </select>
                                                                         </div>
                                                                         
-                                                                        <div>
+                                                                        <div class="form-group">
                                                                             <label>First Time Buyer Status</label>
                                                                             </br>
-                                                                            <input type ="radio" name="firsttime" value="yes" checked>Yes<br>
-                                                                            <input type="radio" name="firsttime" value="no">No
+                                                                            <input type ="radio" name="firsttime" value="0" checked>Yes<br>
+                                                                            <input type="radio" name="firsttime" value="1">No
                                                                         </div>
-                                                                        <div>
+                                                                        <div class="form-group">
                                                                             <label>Location of Parent's Stay</label>
                                                                             </br>
                                                                             <select id="parentLoc" name ="parentLoc">

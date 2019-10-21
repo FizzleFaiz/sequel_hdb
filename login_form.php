@@ -12,6 +12,7 @@ and open the template in the editor.
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <link href="css/loginCSS.css" rel="stylesheet" type="text/css"/>
+        <?php include 'login_validation.php' ?>
     </head>
     <body>
         <div class="container">
@@ -29,13 +30,18 @@ and open the template in the editor.
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="login-form" action="https://phpoll.com/login/process" method="post" role="form">
+								<form id="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" role="form">
 									<div class="form-group">
-										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+										<input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>">
+                                                                                <div style="<?php echo $emailStyle; ?>"> <?php echo $emailErr;?></div> 
 									</div>
 									<div class="form-group">
-										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+										<input type="password" name="pwd" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                                                                <div style="<?php echo $pwdStyle; ?>"> <?php echo $pwdErr;?></div> 
+                                                                                <!-- Checkbox to show password -->
+                                                                                <input type="checkbox" onclick="showPass()"><label id="showPass">Show Password</label>
 									</div>
+                                                                    
 									<div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
 										<label for="remember"> Remember Me</label>
@@ -44,6 +50,7 @@ and open the template in the editor.
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
 												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                                                                <div style="<?php echo $loginStyle; ?>"> <?php echo $loginErr;?></div>
 											</div>
 										</div>
                                                                                 <div class="message">
@@ -53,7 +60,7 @@ and open the template in the editor.
                                                                                 </div>
                                                                             
 									</div>
-									<div class="form-group">
+<!--									<div class="form-group">
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="text-center">
@@ -61,7 +68,7 @@ and open the template in the editor.
 												</div>
 											</div>
 										</div>
-									</div>
+									</div>-->
 								</form>
 							</div>
 						</div>
@@ -70,5 +77,19 @@ and open the template in the editor.
 			</div>
 		</div>
 	</div>
+            <script>
+        
+        function showPass() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+       
+        
+    </script>
+        
     </body>
 </html>

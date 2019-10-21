@@ -5,9 +5,10 @@
  * in mySQL database
  * 
  */
-$servername = "";
-$user = "";
+$servername = "localhost";
+$user = "root";
 $password = "";
+$db ="test";
 $conn = mysqli_connect($servername, $user, $password, $db);
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -28,8 +29,8 @@ require 'PHPMailer/src/SMTP.php';
 
 
 
-                $nameErr = $emailErr = $dobErr = $pwdErr = $pwdcfmErr = "";
-                $nameStyle = $emailStyle = $dobStyle = $pwdStyle = $pwdcfmStyle = "text-align: left; color: black";
+                $nameErr = $emailErr = $dobErr = $pwdErr = $pwdcfmErr = $incomeErr = "";
+                $nameStyle = $emailStyle = $dobStyle = $pwdStyle = $pwdcfmStyle = $incomeStyle = "text-align: left; color: black";
                 
                 if($_SERVER["REQUEST_METHOD"] == "POST")
                 {
@@ -57,8 +58,16 @@ require 'PHPMailer/src/SMTP.php';
                     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
                     {
                         $emailErr = "Invalid email format";
-                        $returnStyle2 = "text-align:left; color:red;";
+                        $emailStyle = "text-align:left; color:red;";
                     }
+                    
+                    $income = test_input($_POST["income"]);
+                    //check income
+                    if (!is_numeric($income)){
+                        $incomeErr = "Should only contain digits";
+                        $incomeStyle = "text-align:left; color:red;";
+                    }
+                    
                     // Checking if password meet minimum requirements
                     $pwd1 = test_input($_POST["pwd1"]);
                     if ( !preg_match( '/^[a-zA-Z]+[a-zA-Z0-9._]+$/', $pwd1) || strlen( $pwd1) < 6)
@@ -91,20 +100,23 @@ require 'PHPMailer/src/SMTP.php';
                         
                         //Server name with name and pass
                         //Escape Variables to prevent SQL injection
-                        $nameSQL = mysqli_real_escape_string($conn,$POST['name']);
-                        $ageSQL = changetoAge(mysqli_real_escape_string($conn,$POST['dob']));
-                        $marriedSQL = mysqli_real_escape_string($conn,$POST['married']);
-                        $parentLocSQL = mysqli_real_escape_string($conn,$POST['parentLoc']);
-                        $citizenSQL = mysqli_real_escape_string($conn,$POST['citizen']);
-                        $incomeSQL = mysqli_real_escape_string($conn,$POST['income']);
-                        $ftSQL = mysqli_real_escape_string($conn,$POST['firsttime']);
-                        $pwdSQL = mysqli_real_escape_string($conn,$POST['pwd1']);
-                        $emailSQL = mysqli_real_escape_string($conn,$POST['email']);
-                        $code = md5(rand(0,1000)); //Generate random 32 character has and assign it
+                        $nameSQL = mysqli_real_escape_string($conn,$_POST['name']);
+                        $ageSQL = (int)changetoAge(mysqli_real_escape_string($conn,$_POST['dob']));
+                        $marriedSQL = mysqli_real_escape_string($conn,$_POST['married']);
+                        $parentLocSQL = mysqli_real_escape_string($conn,$_POST['parentLoc']);
+                        $citizenSQL = mysqli_real_escape_string($conn,$_POST['citizen']);
+                        $incomeSQL = (int)mysqli_real_escape_string($conn,$_POST['income']);
+                        $ftSQL = (int)mysqli_real_escape_string($conn,$_POST['firsttime']);
+                        $pwdSQL = mysqli_real_escape_string($conn,$_POST['pwd1']);
+                        $emailSQL = mysqli_real_escape_string($conn,$_POST['email']);
+                        $codeSQL = md5(rand(0,1000)); //Generate random 32 character has and assign it
 
                         
                         $sql = "INSERT INTO buyer (name,age,married,parentLocation,citizenship,income,firstTime,password,email,hash)"
-                                . "VALUES ('$nameSQL','$ageSQL','$marriedSQL','$parentLocSQL','$citizenSQL',$incomeSQL','$ftSQL','$pwdSQL','$emailSQL')";
+                                . "VALUES ('$nameSQL','$ageSQL','$marriedSQL','$parentLocSQL','$citizenSQL','$incomeSQL','$ftSQL','$pwdSQL','$emailSQL','$codeSQL')";
+                        if (!mysqli_query($conn,$sql)) {
+                            die('Error: ' . mysqli_error($conn));
+                        }
                     }
                     
                     //Sending email verification
@@ -114,7 +126,9 @@ require 'PHPMailer/src/SMTP.php';
                    $mail->SMTPSecure = 'ssl';
                    $mail->Host = "smtp.gmail.com";
                    $mail->Port = '465';
+                   $mail->SMTPAutoTLS = false;
                    $mail->isHTML();
+                   
                    $mail->Username = SMTP_USER;  
                    $mail->Password = SMTP_PASS;
                    $mail->setFrom(SMTP_USER);
@@ -130,7 +144,7 @@ require 'PHPMailer/src/SMTP.php';
                    <p>------------------------</p>
 
                    Please click this link to activate your account:
-                   http://localhost/Sequel_HDB/verify.php?email='.$emailSQL.'&code='.$code.'
+                   http://localhost/Sequel_HDB/verify.php?email='.$emailSQL.'&code='.$codeSQL.'
 
                    ';
                    $mail->addAddress($emailSQL);
@@ -183,7 +197,7 @@ require 'PHPMailer/src/SMTP.php';
                     $now = new DateTime();
                     $age = $now->diff($date);
                     
-                    return $age;
+                    return $age->y;
                 }
                         
     

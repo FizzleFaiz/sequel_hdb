@@ -56,14 +56,7 @@ function validateEmail(form)
 { 
     //Error message to concat if any
     var errmessage = "";
-    
-    //Name regex
-    var namecheck = /^[a-z ,.'-]+$/i;
-    var name = document.forms["register"]["name"].value;
-    if(namecheck.test(name) === false || name.length <4)
-    {
-        errmessage += "- Name must be at least 4 characters long\n";
-    }
+
     var dob = new Date($('#dob').val());
     var day = dob.getDate();
     var month = dob.getMonth() + 1;
@@ -96,6 +89,13 @@ function validateEmail(form)
     {
         errmessage += "- Invalid email\n";
     }
+    var incomeReg = /^\d+$/;
+    var income = document.forms["register"]["income"].value;
+    if(incomeReg.test(income) === false)
+    {
+        errmessage += "- Income should only contain digits\n"
+    }
+    
     //Password regex
     var passcheck = /^[a-zA-Z0-9]+$/i;
     var password = document.forms["register"]["pwd1"].value;
