@@ -5,12 +5,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+$dsn = "rm-gs5c889f8g6s7c80vso.mysql.singapore.rds.aliyuncs.com";
+//$dsn = "gs5c889f8g6s7c80vso.mysql.singapore.rds.aliyuncs.com";
+$dbuser = "1801148MFR";
+$dbpwd = "19ICT2103";
+$db ="1801148mfr";
+$conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
+//try{
+//    $conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
+//    $conn = new PDO("mysql:host=$dsn;port=3306;dbname=$db","$dbuser","$dbpwd",array(PDO::ATTR_PERSISTENT =>true));
+//    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//    echo "Connected successfully";
+//} catch (PDOException $e) {
+//{
+//    echo "Connection failed: ".$e->getMessage();
+//
+//}
+//
+//}
 
-$servername = "localhost";
-$user = "root";
-$password = "";
-$db ="test";
-$conn = mysqli_connect($servername, $user, $password, $db);
+
 
         $loginErr = "";
         $loginStyle = "display: none";

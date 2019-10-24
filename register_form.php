@@ -21,7 +21,7 @@ and open the template in the editor.
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-        <script src="js/moment.min.js" type="text/javascript"></script>
+        
         <!-- CSS -->
         <link href="css/loginCSS.css" rel="stylesheet" type="text/css"/>
         <!-- Validation -->
