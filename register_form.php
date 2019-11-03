@@ -34,11 +34,10 @@ and open the template in the editor.
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
-					<div class="panel-heading">
+					<div class="panel-heading" style="text-align:center;">
 						<div class="row">
-							<div class="col-xs-6">
-								<a href="#" class="active" id="register-form-link">Register</a>
-							</div>
+                                                    <a href="#" class="active" id="register-form-link" >Register</a>
+							
 						</div>
 						<hr>
 					</div>
@@ -157,8 +156,9 @@ and open the template in the editor.
 												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register">
 											</div>
 										</div>
+                                                                                <p class="message" style="text-align:center;">Already Registered? <a href="login_form.php">Login </a></p>
 									</div>
-                                                                            <p class="message">Already Registered? <a href="login_form.php">Login </a></p>
+                                                                            
 								</form>
 							</div>
 						</div>

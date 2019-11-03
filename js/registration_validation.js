@@ -52,6 +52,31 @@ function validateEmail(form)
   }
 }
 */
+function passwordCheck(){
+    var errmessage = "";
+    //Password regex
+    var passcheck = /^[a-zA-Z0-9]+$/i;
+    var password = document.forms["settings"]["pwd1"].value;
+    if(passcheck.test(password) === false || password.length < 6)
+    {
+        errmessage += "- Password should be alphanumeric with at least 6 characters long\n";
+    }
+    var pwdcfm = document.forms["settings"]["pwd2"].value;
+    if(pwdcfm !== password)
+    {
+        errmessage += "- Both passwords should be the same\n";
+    }
+        if (errmessage === "")
+    {
+        alert("Changing Password...");
+        return true;
+    }
+    else
+    {
+        alert(errmessage);
+        return false;
+    }
+}
   function validate()
 { 
     //Error message to concat if any
