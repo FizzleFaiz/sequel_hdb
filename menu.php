@@ -26,7 +26,7 @@
                 </li>
                 <!-- Housing Grants -->
                 <li>
-                    <a href="#">
+                    <a href="grants.php">
                         <div class="icon">
                             <i class="fa fa-usd" aria-hidden="true"></i>
                             <i class="fa fa-usd" aria-hidden="true"></i>
@@ -76,7 +76,7 @@
                 </li>
                 <!-- Logout -->
                 <li>
-                    <a href="">
+                    <a href="logout.php">
                         <div class="icon">
                             <i class="fa fa-sign-out" aria-hidden="true"></i>
                             <i class="fa fa-sign-out" aria-hidden="true"></i>

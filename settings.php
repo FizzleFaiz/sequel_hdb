@@ -63,6 +63,7 @@ session_start();
                     </div>
                     <div style="text-align: center;">
                         <button type="submit" class="btn"><i class="fa fa-check"></i>Change Password</button>
+                        <div style="color:red;"><?php echo $cfmMsg; ?></div>
                     </div>
                     
                     

@@ -4,12 +4,18 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/xampp/htdocs/Sequel_HDB/settings.php</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/register_validation.php</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/css/main.css</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/register_form.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/agents.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/grants.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/housepop.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/logout.php</file>
             <file>file:/C:/xampp/htdocs/Sequel_HDB/js/registration_validation.js</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/main.php</file>
             <file>file:/C:/xampp/htdocs/Sequel_HDB/settings_validation.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/wishlist.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/login_form.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/menu.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/login_validation.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/register_form.php</file>
+            <file>file:/C:/xampp/htdocs/Sequel_HDB/main.php</file>
         </group>
     </open-files>
 </project-private>
