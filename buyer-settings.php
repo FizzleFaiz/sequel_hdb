@@ -19,10 +19,21 @@ session_start();
         <script src="js/passwordcontroller.js" type="text/javascript"></script>
         <script src="js/registration_validation.js" type="text/javascript"></script>
         <link href="css/main.css" rel="stylesheet" type="text/css"/>
-        <?php include 'settings_validation.php'; ?>
+        <?php include 'buyer_settings_validation.php'; ?>
     </head>
     <body ng-app="Settings">
-        <?php include 'menu-buyer.php'; ?>
+        <?php 
+        if ($_SESSION['type']  == '0'){
+            include 'menu.php'; 
+        }
+        if ($_SESSION['type']  == '1'){
+            include 'menu-buyer.php'; 
+        }
+        if ($_SESSION['type']  == '2'){
+            include 'menu-agent.php'; 
+        }
+        
+        ?>
         <!-- Outermost container containing content -->
         <div class="container col-md-10 col-10 col-lg-10" style="top:15%;">
             <!-- Title of Current Webpage -->
@@ -31,11 +42,65 @@ session_start();
             <div class="table-bg" ng-controller="PasswordController" style="padding:1;">
                 <form id="settings-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="settings" method="POST" onsubmit="return passwordCheck();">
                     <h1 style="text-align: center;">Profile: <?php echo $_SESSION["name"]; ?></h1>
-                    <div class="form-group">
-                        <label>Contact Number</label>
-                        <input type="text" name="contact" maxlength="8" id="contact" tabindex="1" class="form-control" required placeholder="Contact No." value="<?php if (isset($_POST['contact'])) echo $_POST['contact']; ?>">
-                        <div style="<?php echo $contactStyle; ?>"> <?php echo $contactErr;?></div>
+                    <div class = "form-group">
+                        <label>Marital Status</label>
+                        </br>
+                        <select id="married" name="married">
+                            <option value ="0">Single</option>
+                            <option value="1">Married</option>
+                        </select>
+
                     </div>
+                    <div class = "form-group">
+                        <label>Citizenship</label>
+                        </br>
+                        <select id="citizen" name="citizen">
+                            <option value ="Singaporean">Singaporean</option>
+                            <option value="PR">Permanent Resident</option>
+                            <option value="Other">Other</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group" data-tip="Average gross monthly household income for 12 months prior">
+                        <label>Income Status per month ($) </label>
+                            <input type="text" name="income" id="name" tabindex="1" class="form-control" required placeholder="Income" value="<?php if (isset($_POST['income'])) echo $_POST['income']; ?>">
+                            <div style="<?php echo $incomeStyle; ?>"> <?php echo $incomeErr;?></div> 
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Location of Parent's Stay</label>
+                        </br>
+                        <select id="parentLoc" name ="parentLoc">
+                            <option value="Ang Mo Kio">Ang Mo Kio</option>
+                            <option value="Bedok">Bedok</option>
+                            <option value="Bishan">Bishan</option>
+                            <option value="Bukit Batok">Bukit Batok</option>
+                            <option value="Bukit Merah">Bukit Merah</option>
+                            <option value="Bukit Panjang">Bukit Panjang</option>
+                            <option value="Bukit Timah">Bukit Timah</option>
+                            <option value="Central Area">Central Area</option>
+                            <option value="Choa Chu Kang">Choa Chu Kang</option>
+                            <option value="Clementi">Clementi</option>
+                            <option value="Geylang">Geylang</option>
+                            <option value="Hougang">Hougang</option>
+                            <option value="Jurong East">Jurong East</option>
+                            <option value="Jurong West">Jurong West</option>
+                            <option value="Kallang/Whampoa">Kallang/Whampoa</option>
+                            <option value="Marine Parade">Marine Parade</option>
+                            <option value="Pasir Ris">Pasir Ris</option>
+                            <option value="Punggol">Punggol</option>
+                            <option value="Queenstown">Queenstown</option>
+                            <option value="Sembawang">Sembawang</option>
+                            <option value="Sengkang">Sengkang</option>
+                            <option value="Serangoon">Serangoon</option>
+                            <option value="Tampines">Tampines</option>
+                            <option value="Toa Payoh">Toa Payoh</option>
+                            <option value="Woodlands">Woodlands</option>
+                            <option value="Yishun">Yishun</option>
+                        </select>
+
+                    </div>
+
                     <label>Change Password:</label>
                     <label>
                       <input onclick="document.getElementById('oldpass').disabled = false; document.getElementById('password').disabled = false; document.getElementById('confirm-password').disabled = false;" type="radio" name="type" value='annual' checked="checked"> Yes
@@ -63,7 +128,7 @@ session_start();
                     </div>
                     
                     <!-- Confirm Password -->
-                    <div >
+                    <div>
                         <label data-tip="Password should be the same as above">Confirm Password</label>
                         <input type="password" name="pwd2" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm New Password" ng-model="password1" ng-change="analyze1(password1)" value="<?php if (isset($_POST['pwd2'])) echo $_POST['pwd2']; ?>" required>
                         <div style="<?php echo $pwdcfmStyle; ?>"> <?php echo $pwdcfmErr;?></div>

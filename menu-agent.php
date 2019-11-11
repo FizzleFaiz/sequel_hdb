@@ -18,7 +18,7 @@
     </head>
     <body>
         <nav class="navbar navbar-icon-top navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="main.php">Team Sequel</a>
+          <a class="navbar-brand" href="#">Team Sequel</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -39,35 +39,55 @@
                   </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                  <a class="nav-link" href="grants.php">
                     <i class="fa fa-usd"></i>
                     Grants
                     <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-star"></i>
+                  <a class="nav-link" href="housepop.php">
+                    <i class="fa fa-fire"></i>
                     House Popularity
+                </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="wishlist.php">
+                    <i class="fa fa-star"></i>
+                    Wishlist
                 </a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-tasks"></i>
-                    Login/Register
+                  <i class="fa fa-cog"></i>
+                    Settings
                 </a>
                   <!-- Agent Dropdown-->
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="login_form.php">
-                      <i class="fa fa-sign-in"></i>
-                      Login
+                    <a class="dropdown-item" href="agent_add_house.php">
+                      <i class="fa fa-plus"></i>
+                      Add House
                   </a>
-                    <a class="dropdown-item" href="register_form.php">
-                      <i class="fa fa-user-plus"></i>
-                      Register
+                    <a class="dropdown-item" href="agent_remove_house.php">
+                      <i class="fa fa-minus"></i>
+                      Remove House
                   </a>
+                    <a class="dropdown-item" href="agent_update_house.php">
+                      <i class="fa fa-pencil"></i>
+                      Update House
+                  </a>
+                    <a class="dropdown-item" href="settings.php">
+                      <i class="fa fa-user"></i>
+                      Update Profile
+                  </a>
+                    
                 </div>
-                  <!-- Buyer Dropdown -->
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="logout.php">
+                    <i class="fa fa-sign-out"></i>
+                    Logout
+                </a>
               </li>
             </ul>
           </div>

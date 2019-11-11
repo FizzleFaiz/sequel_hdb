@@ -6,12 +6,25 @@
  */
 session_start();
 include 'connection.php';
-$email = $_SESSION['id'];
-$password = $_SESSION['pwd'];
-$sql = mysqli_query($conn,"SELECT name FROM buyer WHERE email='".$email."' AND password='".$password."' AND verified='1'") or die(mysqli_error($conn));
-$row = mysqli_fetch_array($sql);
-$name = $row[0];
-$_SESSION['name'] = $name;
+if( isset($_SESSION["id"]) &&  isset($_SESSION["pwd"]) ){
+    $email = $_SESSION['id'];
+    $password = $_SESSION['pwd'];
+    // Buyer
+    if($_SESSION['type']=='1'){
+        $sql = mysqli_query($conn,"SELECT name FROM buyer WHERE email='".$email."' AND password='".$password."' AND verified='1'") or die(mysqli_error($conn));
+    }
+    // Seller
+    if($_SESSION['type']=='2'){
+        $sql = mysqli_query($conn,"SELECT name FROM seller WHERE sellerId='".$email."' AND password='".$password."' AND isAgent='1'") or die(mysqli_error($conn));
+    }
+    $row = mysqli_fetch_array($sql);
+    $name = $row[0];
+    $_SESSION['name'] = $name;
+}
+else{
+    $_SESSION['type'] = '0';
+}
+
 ?>
 <html>
     <head>
@@ -21,15 +34,22 @@ $_SESSION['name'] = $name;
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-        <!-- Data tables -->
-
         
-        
-
         <link href="css/main.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <?php include 'menu.php'; ?>
+        <?php 
+        if ($_SESSION['type']  == '0'){
+            include 'menu.php'; 
+        }
+        if ($_SESSION['type']  == '1'){
+            include 'menu-buyer.php'; 
+        }
+        if ($_SESSION['type']  == '2'){
+            include 'menu-agent.php'; 
+        }
+        
+        ?>
         <!-- Outermost container containing content -->
         <div class="container col-md-10 col-10 col-lg-10" style="top:15%;">
             <!-- Title of Current Webpage -->

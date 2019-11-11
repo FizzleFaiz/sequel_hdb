@@ -18,7 +18,18 @@ session_start();
         <link href="css/main.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <?php include 'menu.php'; ?>
+        <?php 
+        if ($_SESSION['type']  == '0'){
+            include 'menu.php'; 
+        }
+        if ($_SESSION['type']  == '1'){
+            include 'menu-buyer.php'; 
+        }
+        if ($_SESSION['type']  == '2'){
+            include 'menu-agent.php'; 
+        }
+        
+        ?>
         <!-- Outermost container containing content -->
         <div class="container col-md-10 col-10 col-lg-10" style="top:15%;">
             <h1 class="title">House Popularity</h1>

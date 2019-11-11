@@ -40,25 +40,21 @@ $conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
                 $group = mysqli_real_escape_string($conn,$_POST['group']);
                 if($group === 'buyer'){
                     $search = mysqli_query($conn,"SELECT * FROM buyer WHERE email ='".$email."' AND password='".$password."' AND verified =1") or die(mysqli_error($conn));
+                    $_SESSION['type'] = '1';
                 }
-                 if($group === 'agent' || $group === 'owner' ){
-                    if($group === 'owner'){
-                         $isAgent = 'SELECT isAgent FROM seller where sellerId ="'.$email.'"';
-                         $searchAgent = mysqli_query($conn,$isAgent) or die(mysqli_error($conn));
-                         $row = mysqli_fetch_array($searchAgent);
-                         $value = $row[0];
-                         $_SESSION['seller'] = $value;
-                    }
-                    if($group === 'agent'){
-                         $isAgent = 'SELECT isAgent FROM seller where sellerId ="'.$email.'"';
-                         $searchAgent = mysqli_query($conn,$isAgent) or die(mysqli_error($conn));
-                         $row = mysqli_fetch_array($search);
-                         $value = $row[0];
-                         $_SESSION['seller'] = $value;
-                    }
-                    $search = mysqli_query($conn,"SELECT * FROM seller WHERE sellerId ='".$email."' AND password='".$password."'") or die(mysqli_error($conn));
+
+                if($group === 'agent'){
+                     $isAgent = 'SELECT isAgent FROM seller where sellerId ="'.$email.'"';
+                     $searchAgent = mysqli_query($conn,$isAgent) or die(mysqli_error($conn));
+                     $row = mysqli_fetch_array($search);
+                     $value = $row[0];
+                     $_SESSION['seller'] = $value;
+                     $_SESSION['type'] = '2';
+                     $search = mysqli_query($conn,"SELECT * FROM seller WHERE sellerId ='".$email."' AND password='".$password."'") or die(mysqli_error($conn));
+                }
+                
                     
-                }
+                
                 $match = mysqli_num_rows($search);
                 
                 if($match > 0){

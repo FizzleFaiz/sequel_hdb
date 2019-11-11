@@ -12,5 +12,5 @@ unset($_SESSION['pwd']);
 unset($_SESSION['seller']);
 unset($_SESSION['name']);
 $_SESSION = array();
-header('Location: login_form.php');
+header('Location: main.php');
 ?>

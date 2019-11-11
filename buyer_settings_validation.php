@@ -12,11 +12,10 @@ $dbpwd = "19ICT2103";
 $db ="1801148mfr";
 $conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
 $pass = $_SESSION['pwd'];
-$seller = $_SESSION['seller'];
 $id = $_SESSION['id'];
 
-$pwdErr = $pwdcfmErr = $oldpwdErr = $contactErr = "";
-$pwdStyle = $pwdcfmStyle = $oldpwdStyle = $contactStyle = "text-align: left; color: black";
+$pwdErr = $pwdcfmErr = $oldpwdErr =  $incomeErr = "";
+$pwdStyle = $pwdcfmStyle = $oldpwdStyle = $incomeStyle = "text-align: left; color: black";
  $oldValid = $passwordValid = $password1Valid = true;
  $cfmMsg = "";
 
@@ -30,7 +29,6 @@ $pwdStyle = $pwdcfmStyle = $oldpwdStyle = $contactStyle = "text-align: left; col
                         $oldpwdErr = "Invalid old password. Please enter the correct details.";
                         $oldValid = false;
                     }
-
                     $password = test_input($_POST["pwd1"]);
                     $password1 = test_input($_POST["pwd2"]);
                     if(!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/", $password)){
@@ -55,21 +53,24 @@ $pwdStyle = $pwdcfmStyle = $oldpwdStyle = $contactStyle = "text-align: left; col
                             $password1Valid = false;
                     }
                 }
-                $contact = test_input($_POST["contact"]);
-                //check income
-                if (!is_numeric($contact)){
-                    $contactErr = "Should only contain digits";
-                    $contactStyle = "text-align:left; color:red;";
-                }
                 
-                if($oldValid == true && $passwordValid == true && $password1Valid == true && $contactErr == ""){
+                $income = test_input($_POST["income"]);
+                //check income
+                if (!is_numeric($income)){
+                    $incomeErr = "Should only contain digits";
+                    $incomeStyle = "text-align:left; color:red;";
+                }
+                if($oldValid == true && $passwordValid == true && $password1Valid == true && $incomeErr == ""){
                     if(!empty($_POST['oldpass']) && !empty($_POST['pwd1']) && !empty($_POST['pwd2'])){
                         $pwdSQL = mysqli_real_escape_string($conn,$_POST['pwd1']);
                     }
                     $pwdSQL = $_SESSION['pwd'];
-                    $contactSQL = mysqli_real_escape_string($conn,$_POST['contact']);
-                    $sql= "UPDATE seller SET password ='".$pwdSQL."', contactNo = '".$contactSQL."' WHERE sellerId='".$id."' AND isAgent='1' ";
-                    
+                    $marriedSQL = mysqli_real_escape_string($conn,$_POST['married']);
+                    $parentLocSQL = mysqli_real_escape_string($conn,$_POST['parentLoc']);
+                    $citizenSQL = mysqli_real_escape_string($conn,$_POST['citizen']);
+                    $incomeSQL = (int)mysqli_real_escape_string($conn,$_POST['income']);
+                    $sql= "UPDATE buyer SET password ='".$pwdSQL."', married ='".$marriedSQL."', parentLocation = '".$parentLocSQL."', citizenship = '".$citizenSQL."'"
+                            . ", income = '".$incomeSQL."' WHERE email='".$id."' AND verified='1' ";
                     
                     if (!mysqli_query($conn,$sql)) {
                     die('Error: ' . mysqli_error($conn));
@@ -77,7 +78,7 @@ $pwdStyle = $pwdcfmStyle = $oldpwdStyle = $contactStyle = "text-align: left; col
                      else {
                          
                          $_SESSION['pwd'] = $pwdSQL;
-                         $cfmMsg= "Details have been updated";  
+                         $cfmMsg= "Details has been updated";  
                      }
                      
                     

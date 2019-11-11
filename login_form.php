@@ -47,7 +47,6 @@ and open the template in the editor.
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <input type ="radio" name="group" value="buyer" checked>Buyer
-                                                                        <input type="radio" name="group" value="owner">Owner
                                                                         <input type="radio" name="group" value="agent">Agent
                                                                     </div>
 
