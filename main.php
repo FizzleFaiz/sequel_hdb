@@ -25,10 +25,16 @@ else{
     $_SESSION['type'] = '0';
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    if (isset($_POST['houseDetails']) && !empty($_POST['houseDetails'])){
+        $_SESSION['houseDetails'] = $_POST['houseDetails'];
+        header('Location: housing_details.php');
+    }
+}
 ?>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" name="viewport" content="width=device-width">
         <title>Main Page</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -36,6 +42,7 @@ else{
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         
         <link href="css/main.css" rel="stylesheet" type="text/css"/>
+        <?php // include 'housing_details.php' ?>
     </head>
     <body>
         <?php 
@@ -51,48 +58,91 @@ else{
         
         ?>
         <!-- Outermost container containing content -->
-        <div class="container col-md-10 col-10 col-lg-10" style="top:15%;">
+        <div class="container col-lg-12" style="top:15%;">
             <!-- Title of Current Webpage -->
             <h1 class="title">Home</h1>
             <!-- Populate the table -->
-            <div  class="table-bg">
-                <table id="data" class="table">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Town</th>
-                            <th>Block</th>
-                            <th>Street Name</th>
-                            <th>Flat Type</th>
-                            <th>Storey</th>
-                            <th>Floor Area (sqf)</th>
-                            <th>Flat Model</th>
-                            <th>More Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        $query = mysqli_query($conn,"SELECT resaleId,town,block,streetName,flatType,storey,floorArea,FlatModel from resale_putup LIMIT 2000");
-                        
-                        while($row = mysqli_fetch_assoc($query)):
-                        ?>
-                        <tr>
-                            <td><?php echo $row['resaleId']; ?></td>
-                            <td><?php echo $row['town']; ?></td>
-                            <td><?php echo $row['block']; ?></td>
-                            <td><?php echo $row['streetName']; ?></td>
-                            <td><?php echo $row['flatType']; ?></td>
-                            <td><?php echo $row['storey']; ?></td>
-                            <td><?php echo $row['floorArea']; ?></td>
-                            <td><?php echo $row['FlatModel']; ?></td>
-                            <td></td>
-                        </tr>
-                       
-                        <?php endwhile; ?>
-                    </tbody>
+            <div class="card" style="background-color:transparent;">
+                <form method="POST" style="background-color:yellow;">
+                    <div class="row">
+                        <select id="flattype" name="flattype">
+                            <?php $query = mysqli_query($conn,"SELECT DISTINCT flatType FROM resale_putup ORDER BY flatType");
+                            while($row = mysqli_fetch_assoc($query)):
+                                echo "<option value'".$row['flatType']."'>".$row['flatType']."</option>";
+                            endwhile;
+                            ?>
+                        </select>
+                        <select id="town" name="town">
+                            <?php $query = mysqli_query($conn,"SELECT DISTINCT town FROM resale_putup ORDER BY town");
+                            while($row = mysqli_fetch_assoc($query)):
+                                echo "<option value='".$row['town']."'>".$row['town']."</option>";
+                            endwhile;
+                            ?>
+                        </select>
+                        <select id="price" name="price">
+                            <option value="any">Any Price</option>
+                            <option value ="200000">MAX $200,000</option>
+                            <option value ="400000">MAX $400,000</option>
+                            <option value ="600000">MAX $600,000</option>
+                            <option value ="800000">MAX $800,000</option>
+                            <option value ="1000000">MAX $1,000,000</option>
+                        </select>
+                        <input type="submit" name="filteredSearch" id="filteredSearch" value="Search"/>
+                    </div>
+                </form>
+                <div class ="row" style="">
+                    <?php
+                    if (isset($_POST['filteredSearch'])){
+                        $flattype = $_POST['flattype'];
+                        $town = $_POST['town'];
+                        $price = intval($_POST['price']);
+                        if ($price == 'any'){
+                            $query = mysqli_query($conn,"SELECT * from resale_putup where available > 0 AND flatType ='".$flattype."' AND town = '".$town."' LIMIT 2000")or die(mysqli_error($conn));
+                            
+                        }
+                        else
+                        {
+                            $query = mysqli_query($conn,"SELECT * from resale_putup where available > 0 AND flatType ='".$flattype."' AND town = '".$town."' AND resalePrice <= ".$price." LIMIT 2000")or die(mysqli_error($conn));
+                        }
+                    }
+                    else{
+                        $query = mysqli_query($conn,"SELECT * from resale_putup where available > 0 LIMIT 2000");
+                    }
+                    if ($length = mysqli_num_rows($query) == 0){
+                        echo "Nothing was Found, Please try another search";
+                    }
+                    else
+                        {
                     
-                </table>
+                            while($row = mysqli_fetch_assoc($query)):
+                    ?>
+                        <div class="col-md-3">
+                            <div class ="card" style="margin:10px;">
+                            <img src="img/BTO_IMAGE.jpg" style="height:200px; width:100%;">
+                            <?php echo "<h4 align=\"center\">".$row['resaleId']. " " .$row['town']."</h4>"; ?>
+                            <div class="row" >
+                                <div class="col-sm-7">
+                                    <?php echo "<p style=\"margin-left:10px;4\">".$row['block']. " " .$row['streetName']."<br>Type: ".$row['flatType']; ?>
+                                </div>
+                                <div class="col-sm-5">
+                                    <?php echo "<p align=\"center;\">$".$row['resalePrice']."<p>";?>
+                                    <form method="POST">
+                                        <input type="hidden" name="houseDetails" id ="houseDetails" value="<?php echo $row['resaleId'];?>"/>
+                                        <input type="submit" class="button" name="selectedHouse" id="selectedHouse" value="Details"/>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    <?php endwhile;
+                        }
+                        ?>
+
+
+                </div>
             </div>
+            
             
         </div>
         <link href="tables/datatables.css" rel="stylesheet" type="text/css"/>
@@ -120,21 +170,6 @@ else{
         <script src="tables/js/vfs_fonts.js" type="text/javascript"></script>
         <a href="tables/swf/flashExport.swf"></a>
         <script>
-            $(document).ready(function() {
-                var table = $("#data").DataTable({
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ],
-                    "columnDefs": [ {
-                    "targets": -1,
-                    "data": null,
-                    "defaultContent": "<button>Click Here!</button>"
-                } ],
-                    
-                });
-                table.buttons().container()
-                    .insertAfter( '#data_filter' );
-            });
 
         </script>
         
