@@ -31,6 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         header('Location: housing_details.php');
     }
 }
+
+
 ?>
 <html>
     <head>

@@ -5,9 +5,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+define('SMTP_USER', 'teamsequelhdb@gmail.com');
+define('SMTP_PASS', 'Sequel2103');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 session_start();
 $dsn = "rm-gs5c889f8g6s7c80vso.mysql.singapore.rds.aliyuncs.com";
-//$dsn = "gs5c889f8g6s7c80vso.mysql.singapore.rds.aliyuncs.com";
 $dbuser = "1801148MFR";
 $dbpwd = "19ICT2103";
 $db ="1801148mfr";
@@ -15,6 +24,70 @@ $conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
 $houseId = mysqli_real_escape_string($conn,$_SESSION['houseDetails']);
 $searchHouse = mysqli_query($conn,"SELECT * FROM resale_putup WHERE resaleId ='".$houseId."'") or die(mysqli_error($conn));
 $searchedHouse = mysqli_fetch_array($searchHouse);
+if( isset($_SESSION["id"]) &&  isset($_SESSION["pwd"]) ){
+    $email = $_SESSION['id'];
+    $password = $_SESSION['pwd'];
+    // Buyer
+    if($_SESSION['type']=='1'){
+        $sql = mysqli_query($conn,"SELECT * FROM buyer WHERE email='".$email."' AND password='".$password."' AND verified='1'") or die(mysqli_error($conn));
+        $row = mysqli_fetch_assoc($sql);
+        $name = $row['name'];
+        $buyerId = $row['buyerId'];
+    }
+    // Seller
+    if($_SESSION['type']=='2'){
+        $sql = mysqli_query($conn,"SELECT name FROM seller WHERE sellerId='".$email."' AND password='".$password."' AND isAgent='1'") or die(mysqli_error($conn));
+        $row = mysqli_fetch_assoc($sql);
+        $name = $row['name'];
+    }
+    
+    $_SESSION['name'] = $name;
+}
+else{
+    $_SESSION['type'] = '0';
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    if (isset($_POST['buyerId']) && !empty($_POST['buyerId'])){
+        mysqli_query($conn,"INSERT INTO buyer_housing VALUES('".$_POST['buyerId']."','".$_POST['resaleId']."', CURRENT_TIMESTAMP)") or die (mysqli_error($conn));
+        $sql = mysqli_query($conn, "SELECT s.email from seller s, resale_putup rp where s.sellerId = rp.sellerId AND rp.resaleId ='".$_POST['resaleId']."'");
+        $sellerEmail = mysqli_fetch_array($sql);  
+        $mail = new PHPMailer;
+        try {
+            $mail->isSMTP();
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'ssl';
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = '465';
+            $mail->SMTPAutoTLS = false;
+            
+            
+            $mail->Username = SMTP_USER;  
+            $mail->Password = SMTP_PASS;
+            $mail->setFrom(SMTP_USER);
+            $mail->addAddress($sellerEmail[0]);
+            $mail->Subject  = 'Interested Buyer In '.$_POST['resaleId'].' '.$_POST['resaleTown'];
+            $mail->isHTML(true);
+            $mail->Body     = '
+
+            Hi,
+
+            '.$row['name'].' is interested in '.$_POST['resaleId'].' '.$_POST['resaleTown'].'
+            The contact details is:
+            <p>------------------------</p>
+            <p>Email: '.$row['email'].'</p> 
+            <p>------------------------</p>
+
+            Thank You
+            ';
+            if ($mail->send()){
+            echo "<script type='text/javascript'>alert('You have successfully contacted the agent.');</script>";
+            }
+        } catch (Exception $e) {
+           echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+       }
+    }
+}
 
 ?>
 <html>
@@ -60,8 +133,24 @@ $searchedHouse = mysqli_fetch_array($searchHouse);
                     <div class="col-md-6">
                         <p> RAJ THIS SPACE IS FOR YOU </p>
                     </div>
-                    <div class="col-md-12" style="padding-top:10px;">
-                        <button style="margin: 0 auto; width:100%; border-radius: 12px; background-color:yellow; font-family: Roboto;"><b>Interested? Click Here</b></button>
+                    <div class="col-md-12" style="padding-top:10px; margin: auto; text-align:center;">
+                        <?php 
+                            if($_SESSION['type']=='1'){
+                        ?>
+                            <form method="POST" style="margin:0auto;">
+                                <input type="hidden" name="buyerId" value="<?php echo $buyerId;?>">
+                                <input type="hidden" name="resaleId" value="<?php echo $searchedHouse['resaleId'];?>">
+                                <input type="hidden" name="resaleTown" value="<?php echo $searchedHouse['town'];?>">
+                                <input type="submit" style ="border-radius: 12px; background-color:yellow; font-family:Roboto;" class="button" name="interestedhouse" value="Contact Agent">
+                            </form>
+                        <?php 
+                            }
+                            else{
+                        ?>
+                            <button disabled>Please Sign In to Contact Agent</button>
+                        <?php
+                            }
+                        ?>
                     </div>
                 </div>
                 
