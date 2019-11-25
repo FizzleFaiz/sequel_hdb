@@ -49,6 +49,7 @@ $conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
                      $row = mysqli_fetch_array($search);
                      $value = $row[0];
                      $_SESSION['seller'] = $value;
+                     $_SESSION['sellerId'] = $email;
                      $_SESSION['type'] = '2';
                      $search = mysqli_query($conn,"SELECT * FROM seller WHERE sellerId ='".$email."' AND password='".$password."'") or die(mysqli_error($conn));
                 }
