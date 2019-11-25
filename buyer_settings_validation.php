@@ -64,13 +64,15 @@ $pwdStyle = $pwdcfmStyle = $oldpwdStyle = $incomeStyle = "text-align: left; colo
                     if(!empty($_POST['oldpass']) && !empty($_POST['pwd1']) && !empty($_POST['pwd2'])){
                         $pwdSQL = mysqli_real_escape_string($conn,$_POST['pwd1']);
                     }
+                    else{
                     $pwdSQL = $_SESSION['pwd'];
+                    }
                     $marriedSQL = mysqli_real_escape_string($conn,$_POST['married']);
                     $parentLocSQL = mysqli_real_escape_string($conn,$_POST['parentLoc']);
                     $citizenSQL = mysqli_real_escape_string($conn,$_POST['citizen']);
                     $incomeSQL = (int)mysqli_real_escape_string($conn,$_POST['income']);
                     $sql= "UPDATE buyer SET password ='".$pwdSQL."', married ='".$marriedSQL."', parentLocation = '".$parentLocSQL."', citizenship = '".$citizenSQL."'"
-                            . ", income = '".$incomeSQL."' WHERE email='".$id."' AND verified='1' ";
+                            . ", income = ".$incomeSQL." WHERE email='".$id."' AND verified=1 ";
                     
                     if (!mysqli_query($conn,$sql)) {
                     die('Error: ' . mysqli_error($conn));

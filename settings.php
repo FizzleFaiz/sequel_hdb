@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 session_start();
+
 ?>
 <html>
     <head>
@@ -26,7 +27,7 @@ session_start();
         <!-- Outermost container containing content -->
         <div class="container col-md-10 col-10 col-lg-10" style="top:15%;">
             <!-- Title of Current Webpage -->
-            <h1 class="title">Settings</h1>
+            <h1 class="title">Settings<</h1>
             <!-- Settings -->
             <div class="table-bg" ng-controller="PasswordController" style="padding:1;">
                 <form id="settings-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="settings" method="POST" onsubmit="return passwordCheck();">
