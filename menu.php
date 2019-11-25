@@ -47,8 +47,14 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="fa fa-star"></i>
+                    <i class="fa fa-fire"></i>
                     House Popularity
+                </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="statistics.php">
+                    <i class="fa fa-bar-chart"></i>
+                    Statistics
                 </a>
               </li>
               <li class="nav-item dropdown">
