@@ -8,7 +8,7 @@
 include 'connection.php';
 session_start();
 if (isset($_POST['Remove'])){
-    mysqli_query($conn, 'UPDATE resale_putup SET available = 0 WHERE resaleId = '.$_POST['removeResaleId'].' AND sellerId = "'.$_SESSION['sellerId'].'"');
+    mysqli_query($conn, 'DELETE FROM resale_putup WHERE resaleId = '.$_POST['removeResaleId'].' AND sellerId = "'.$_SESSION['sellerId'].'"');
 }
 ?>
 <html>
@@ -31,9 +31,9 @@ if (isset($_POST['Remove'])){
             <?php 
                 if (isset($_POST['filterResaleId'])){
                     $searchResaleId = mysqli_escape_string($conn, $_POST['searchResaleId']);
-                    $sql = mysqli_query($conn, "SELECT resaleId FROM resale_putup WHERE available != 0 AND sellerId = \"".$_SESSION['sellerId']."\""); 
+                    $sql = mysqli_query($conn, "SELECT resaleId FROM resale_putup WHERE available = 0 AND sellerId = \"".$_SESSION['sellerId']."\""); 
                     if ($searchResaleId == NULL){
-                        $query = mysqli_query($conn,'SELECT * FROM resale_putup WHERE available != 0 AND sellerId = "'.$_SESSION['sellerId'].'"') or die(mysqli_error($conn));
+                        $query = mysqli_query($conn,'SELECT * FROM resale_putup WHERE available = 0 AND sellerId = "'.$_SESSION['sellerId'].'"') or die(mysqli_error($conn));
                         $num = mysqli_num_rows($query);
                     }
                     else{
@@ -45,7 +45,7 @@ if (isset($_POST['Remove'])){
                         endwhile;
 
                         if ($count++ > 0){
-                            $query = mysqli_query($conn,'SELECT * FROM resale_putup WHERE available != 0 AND resaleId ='.$searchResaleId.' AND sellerId = "'.$_SESSION['sellerId'].'"') or die(mysqli_error($conn));
+                            $query = mysqli_query($conn,'SELECT * FROM resale_putup WHERE available = 0 AND resaleId ='.$searchResaleId.' AND sellerId = "'.$_SESSION['sellerId'].'"') or die(mysqli_error($conn));
                             $num = mysqli_num_rows($query);
                         }
                         else{
@@ -54,7 +54,7 @@ if (isset($_POST['Remove'])){
                     }
                 }
                 else{
-                    $query = mysqli_query($conn,'SELECT * FROM resale_putup WHERE available != 0 AND sellerId = "'.$_SESSION['sellerId'].'"') or die(mysqli_error($conn));
+                    $query = mysqli_query($conn,'SELECT * FROM resale_putup WHERE available = 0 AND sellerId = "'.$_SESSION['sellerId'].'"') or die(mysqli_error($conn));
                     $num = mysqli_num_rows($query);
                 }
                 
