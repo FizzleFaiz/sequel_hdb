@@ -16,11 +16,7 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
 session_start();
-$dsn = "rm-gs5c889f8g6s7c80vso.mysql.singapore.rds.aliyuncs.com";
-$dbuser = "1801148MFR";
-$dbpwd = "19ICT2103";
-$db ="1801148mfr";
-$conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
+include 'connection.php';
 $houseId = mysqli_real_escape_string($conn,$_SESSION['houseDetails']);
 $searchHouse = mysqli_query($conn,"SELECT * FROM resale_putup WHERE resaleId ='".$houseId."'") or die(mysqli_error($conn));
 $searchedHouse = mysqli_fetch_array($searchHouse);
