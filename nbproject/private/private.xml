@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/agent_remove_house.php</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/menu-owner.php</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/menu-agent.php</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/agent_add_house.php</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/housepop.php</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/agent_update_house.php</file>
-            <file>file:/C:/xampp/htdocs/Sequel_HDB/main.php</file>
+            <file>file:/C:/xampp/htdocs/sequel_hdb/agent_remove_house.php</file>
+            <file>file:/C:/xampp/htdocs/sequel_hdb/agent_add_house.php</file>
+            <file>file:/C:/xampp/htdocs/sequel_hdb/main.php</file>
+            <file>file:/C:/xampp/htdocs/sequel_hdb/agent_update_house.php</file>
+            <file>file:/C:/xampp/htdocs/sequel_hdb/agents.php</file>
+            <file>file:/C:/xampp/htdocs/sequel_hdb/housepop.php</file>
         </group>
     </open-files>
 </project-private>
