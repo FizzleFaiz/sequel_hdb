@@ -6,15 +6,11 @@
  * and open the template in the editor.
  */
 session_start();
-$dsn = "rm-gs5c889f8g6s7c80vso.mysql.singapore.rds.aliyuncs.com";
-//$dsn = "gs5c889f8g6s7c80vso.mysql.singapore.rds.aliyuncs.com";
-$dbuser = "1801148MFR";
-$dbpwd = "19ICT2103";
-$db ="1801148mfr";
-$conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
+include 'connection.php';
 $houseId = mysqli_real_escape_string($conn,$_SESSION['houseDetails']);
 $searchHouse = mysqli_query($conn,"SELECT * FROM resale_putup WHERE resaleId ='".$houseId."'") or die(mysqli_error($conn));
 $searchedHouse = mysqli_fetch_array($searchHouse);
+
 
 ?>
 <html>
@@ -56,9 +52,89 @@ $searchedHouse = mysqli_fetch_array($searchHouse);
                         <p>Flat Type: <?php echo $searchedHouse['flatType'];?></p>
                         <p>Flat Model: <?php echo $searchedHouse['flatModel'];?></p>
                         <p>Floor Area: <?php echo $searchedHouse['floorArea'];?> sqft</p>
+                        <p>Seller Id: <?php echo $searchedHouse['sellerId'];?> </p>
                     </div>
                     <div class="col-md-6">
-                        <p> RAJ THIS SPACE IS FOR YOU </p>
+                        <?php 
+                            if ($_SESSION['type']  == '0'){
+                                echo '<h2> Please Login/Register to learn more on which Housing Grants you can apply for</h2>';
+                            }
+                            if ($_SESSION['type']  == '1'){
+                                $output = $flatType = $flatTYPE = $flatLocation = $Citizen = $citizenship = $isAboveAge = $nearP = $parentloc = "";
+                                $firstTime = $married = $age = $income = 0;
+                                $email = $_SESSION['id'];
+                                $userId = mysqli_real_escape_string($conn,$email);
+                                $fetchUserDetails = mysqli_query($conn,"SELECT * FROM buyer WHERE email ='".$email."'");
+                                $userDetails = mysqli_fetch_array($fetchUserDetails);
+                                
+                                  
+                                //echo $searchedHouse['resalePrice'];
+                                $flatType = $searchedHouse['flatType'];
+                                $flatLocation = $searchedHouse['town'];
+                                $firstTime = $userDetails['firstTime'];
+                                $married = $userDetails['married'];
+                                $age = $userDetails['age'];
+                                $income = $userDetails['income'];
+                                $Citizen = $userDetails['citizenship'];
+                                $parentloc = $userDetails['parentLocation'];
+                                
+                                if($flatType == "5 ROOM"){
+                                    $flatTYPE = "5 ROOM";
+                                }else{
+                                    $flatTYPE = "2-4 ROOM";
+                                }
+                        
+                                if($Citizen == 'Singaporean'){
+                                   $citizenship = "SC";
+                                }else{
+                                   $citizenship = "other";
+                                }
+                               if($married == 0){
+                                    if($age >= 35){
+                                        $isAboveAge = "yes"; 
+                                    }else{
+                                        $isAboveAge = "n/a";
+                                    }
+                                }else{
+                                    $isAboveAge = "n/a";
+                                }
+                                if($flatLocation == $parentloc){
+                                    $nearP = "yes";
+                                }else{
+                                    $nearP = "n/a";
+                                }
+//                                echo $citizenship." ";
+//                                echo $married." ";
+//                                echo $isAboveAge." ";
+//                                echo $nearP." ";
+//                                echo $income." ";
+//                                echo $firstTime." ";
+//                                echo $flatType." ";
+//                                echo $flatTYPE." ";
+                                $fetchGrantDetails = "SELECT grantType, grantAmount FROM housinggrant"
+                                        ." WHERE firstTimer =".$firstTime." AND married =".$married." AND citizenship ='".$citizenship."' "
+                                        ." AND aboveAge35 = '".$isAboveAge."' AND locationNearParents = '".$nearP."' "
+                                        ." AND (flatType ='".$flatTYPE."' OR flatType ='n/a') "
+                                        ." AND (incomeFloor <= ".$income." AND incomeCeiling >=".$income.")";
+                                if($result = mysqli_query($conn,$fetchGrantDetails)){
+                                    echo '<h5>Possible Housing Grant you can be eligible for.</h3>';
+                                    echo '<h6>For more information on the individual grants, please visit our Grants tab</h4>';
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        echo '<div>'.$row["grantType"].'</div>';
+                                         echo '<small>Amount Claimable: $'.$row["grantAmount"].'</small>';
+                                    }
+                                }else{
+                                    echo '<h5>You are not eligible for any of the Housing Grants.</h3>';
+                                    echo '<h6>For more information on the individual grants, please visit our Grants tab</h4>';
+                                }
+                               // echo $output;
+                                //include 'menu-buyer.php'; 
+                            }
+                            if ($_SESSION['type']  == '2'){
+                                //include 'menu-agent.php'; 
+                            }
+
+                        ?>
                     </div>
                     <div class="col-md-12" style="padding-top:10px;">
                         <button style="margin: 0 auto; width:100%; border-radius: 12px; background-color:yellow; font-family: Roboto;"><b>Interested? Click Here</b></button>
@@ -67,5 +143,22 @@ $searchedHouse = mysqli_fetch_array($searchHouse);
                 
             </div>               
         </div>
+        <script>
+            $(document).ready(function(){
+            var SpouseC = "";
+            $('#SpouseC').change(function(){
+                SpouseC = $(this).val();
+                    alert("Submitted");
+                    $.ajax({
+                        type:'POST',
+                        url:'fetchGrantForm.php',
+                        data:{SpouseC:SpouseC},
+                        success:function(data){
+                            $('#time').html(data);
+                        }
+
+                    });
+                });
+            </script>
     </body>
 </html>
