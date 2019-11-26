@@ -38,23 +38,17 @@
                       <span class="sr-only">(current)</span>
                   </a>
               </li>
-              <li class="nav-item">
+<!--              <li class="nav-item">
                   <a class="nav-link" href="grants.php">
                     <i class="fa fa-usd"></i>
                     Grants
                     <span class="sr-only">(current)</span>
                 </a>
-              </li>
+              </li>-->
               <li class="nav-item">
-                  <a class="nav-link" href="housepop.php">
-                    <i class="fa-star"></i>
-                    House Popularity
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-star"></i>
-                    Wishlist
+                <a class="nav-link" href="statistics.php">
+                    <i class="fa fa-bar-chart"></i>
+                    Statistics
                 </a>
               </li>
               <li class="nav-item dropdown">

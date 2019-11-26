@@ -46,9 +46,10 @@ $conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
                 if($group === 'agent'){
                      $isAgent = 'SELECT isAgent FROM seller where sellerId ="'.$email.'"';
                      $searchAgent = mysqli_query($conn,$isAgent) or die(mysqli_error($conn));
-                     $row = mysqli_fetch_array($search);
+                     $row = mysqli_fetch_array($searchAgent);
                      $value = $row[0];
                      $_SESSION['seller'] = $value;
+                     $_SESSION['sellerId'] = $email;
                      $_SESSION['type'] = '2';
                      $search = mysqli_query($conn,"SELECT * FROM seller WHERE sellerId ='".$email."' AND password='".$password."'") or die(mysqli_error($conn));
                 }

@@ -31,6 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         header('Location: housing_details.php');
     }
 }
+
+
 ?>
 <html>
     <head>
@@ -63,8 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <h1 class="title">Home</h1>
             <!-- Populate the table -->
             <div class="card" style="background-color:transparent;">
-                <form method="POST" style="background-color:yellow;">
-                    <div class="row">
+                <form method="POST">
+                    <div class="row" style="float:right; padding-right:40px;">
                         <select id="flattype" name="flattype">
                             <?php $query = mysqli_query($conn,"SELECT DISTINCT flatType FROM resale_putup ORDER BY flatType");
                             while($row = mysqli_fetch_assoc($query)):
@@ -113,6 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     }
                     else
                         {
+
                     
                             while($row = mysqli_fetch_assoc($query)):
                     ?>

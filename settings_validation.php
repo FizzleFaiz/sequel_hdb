@@ -66,9 +66,12 @@ $pwdStyle = $pwdcfmStyle = $oldpwdStyle = $contactStyle = "text-align: left; col
                     if(!empty($_POST['oldpass']) && !empty($_POST['pwd1']) && !empty($_POST['pwd2'])){
                         $pwdSQL = mysqli_real_escape_string($conn,$_POST['pwd1']);
                     }
-                    $pwdSQL = $_SESSION['pwd'];
+                    else{
+                        $pwdSQL = $_SESSION['pwd'];
+                    }
+                    
                     $contactSQL = mysqli_real_escape_string($conn,$_POST['contact']);
-                    $sql= "UPDATE seller SET password ='".$pwdSQL."', contactNo = '".$contactSQL."' WHERE sellerId='".$id."' AND isAgent='1' ";
+                    $sql= "UPDATE seller SET password ='".$pwdSQL."', contactNo = ".$contactSQL." WHERE sellerId='".$id."' AND isAgent=1";
                     
                     
                     if (!mysqli_query($conn,$sql)) {

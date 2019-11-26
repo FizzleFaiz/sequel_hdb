@@ -9,7 +9,7 @@ session_start();
 include 'connection.php';
 
             $jsonArray1 = array();
-
+            
             $query1 = mysqli_query($conn,"SELECT a.companyName, SUM(a.sales) as totalSales"
                     . " FROM seller s, agent a"
                     . " WHERE s.isAgent = 1 AND s.sellerId = a.sellerId"
@@ -100,6 +100,7 @@ include 'connection.php';
                     . " WHERE s.isAgent = 1 AND s.sellerId = a.sellerId"
                     . " ORDER BY a.rating DESC, a.sales DESC LIMIT 20");
 
+
             while($row2 = mysqli_fetch_assoc($query2)):
                 $jsonArrayItem2 = array();
                 $jsonArrayItem2['label'] = $row2['name'];
@@ -124,10 +125,12 @@ include 'connection.php';
                     . " GROUP BY a1.companyName"
                     . " ORDER BY avgSales DESC");
 
+
             while($row1 = mysqli_fetch_assoc($query1)):
                 $jsonArrayItem1 = array();
                 $jsonArrayItem1['label'] = $row1['companyName'];
                 $jsonArrayItem1['y'] = $row1['avgSales'];
+
                 array_push($jsonArray1, $jsonArrayItem1);
 //                        foreach($result as $row){
 //                            array_push($dataPoints, array("x"=> $row->x, "y"=> $row->y));
@@ -150,16 +153,18 @@ include 'connection.php';
                 $jsonArrayItem2['label'] = $row2['name'];
                 $jsonArrayItem2['y'] = $row2['sales'];
                 array_push($jsonArray2, $jsonArrayItem2);
+
             endwhile;
         }
         if(isset($_POST['button3'])) { 
             $jsonArray1 = array();
 
-            $query1 = mysqli_query($conn,"SELECT a.companyName, SUM(a.sales) as totalSales"
+           $query1 = mysqli_query($conn,"SELECT a.companyName, SUM(a.sales) as totalSales"
                     . " FROM seller s, agent a"
                     . " WHERE s.isAgent = 1 AND s.sellerId = a.sellerId"
                     . " GROUP BY a.companyName"
                     . " ORDER BY totalSales DESC LIMIT 15");
+
 
             while($row1 = mysqli_fetch_assoc($query1)):
                 $jsonArrayItem1 = array();
@@ -187,6 +192,7 @@ include 'connection.php';
                 $jsonArrayItem2['label'] = $row2['name'];
                 $jsonArrayItem2['y'] = $row2['sales'];
                 array_push($jsonArray2, $jsonArrayItem2);
+
             endwhile;
         }
         
@@ -232,6 +238,7 @@ include 'connection.php';
           
         <input type="submit" name="button2"
                 value="Average Agent Sales"/> 
+
     </form>
 <div>
         <div id="chartContainer1" style="height: 400px; width: 100%;"></div>
@@ -341,6 +348,7 @@ include 'connection.php';
                     
                 </table>
             </div>           
+
         </div>
         <link href="tables/datatables.css" rel="stylesheet" type="text/css"/>
         <script src="tables/datatables.js" type="text/javascript"></script>
