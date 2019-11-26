@@ -46,12 +46,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="housepop.php">
-                    <i class="fa fa-fire"></i>
-                    House Popularity
-                </a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="statistics.php">
                     <i class="fa fa-bar-chart"></i>
                     Statistics

@@ -46,12 +46,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="housepop.php">
-                    <i class="fa fa-fire"></i>
-                    House Popularity
-                </a>
-              </li>
-              <li class="nav-item">
                   <a class="nav-link" href="statistics.php">
                     <i class="fa fa-bar-chart"></i>
                     Statistics
@@ -64,10 +58,7 @@
                 </a>
                   <!-- Agent Dropdown-->
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="agent_add_house.php">
-                      <i class="fa fa-plus"></i>
-                      Add House
-                  </a>
+                    
                     <a class="dropdown-item" href="agent_remove_house.php">
                       <i class="fa fa-minus"></i>
                       Remove House
