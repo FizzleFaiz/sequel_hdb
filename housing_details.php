@@ -126,24 +126,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         <p>Flat Model: <?php echo $searchedHouse['flatModel'];?></p>
                         <p>Floor Area: <?php echo $searchedHouse['floorArea'];?> sqft</p>
                     </div>
-                    <div class="col-md-6">
-                        <p> RAJ THIS SPACE IS FOR YOU </p>
-                    </div>
-                    <div class="col-md-12" style="padding-top:10px; margin: auto; text-align:center;">
+                    <div class="col-md-6" style="text-align:center; margin: auto;">
                         <?php 
                             if($_SESSION['type']=='1'){
                         ?>
-                            <form method="POST" style="margin:0auto;">
+                            <form method="POST" style="margin:auto;">
                                 <input type="hidden" name="buyerId" value="<?php echo $buyerId;?>">
                                 <input type="hidden" name="resaleId" value="<?php echo $searchedHouse['resaleId'];?>">
                                 <input type="hidden" name="resaleTown" value="<?php echo $searchedHouse['town'];?>">
-                                <input type="submit" style ="border-radius: 12px; background-color:yellow; font-family:Roboto;" class="button" name="interestedhouse" value="Contact Agent">
+                                <input type="submit" style ="border-radius: 12px; background-color:yellow; font-family:Roboto;" class="button" name="interestedhouse" value="Contact Seller">
                             </form>
                         <?php 
                             }
                             else{
                         ?>
-                            <button disabled>Please Sign In to Contact Agent</button>
+                            <button disabled>Please Sign In to Contact Seller</button>
                         <?php
                             }
                         ?>
