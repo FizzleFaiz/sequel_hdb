@@ -16,7 +16,11 @@ require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
 session_start();
-include 'connection.php';
+$dsn = "rm-gs5c889f8g6s7c80vso.mysql.singapore.rds.aliyuncs.com";
+$dbuser = "1801148MFR";
+$dbpwd = "19ICT2103";
+$db ="1801148mfr";
+$conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
 $houseId = mysqli_real_escape_string($conn,$_SESSION['houseDetails']);
 $searchHouse = mysqli_query($conn,"SELECT * FROM resale_putup WHERE resaleId ='".$houseId."'") or die(mysqli_error($conn));
 $searchedHouse = mysqli_fetch_array($searchHouse);
@@ -126,21 +130,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         <p>Flat Model: <?php echo $searchedHouse['flatModel'];?></p>
                         <p>Floor Area: <?php echo $searchedHouse['floorArea'];?> sqft</p>
                     </div>
-                    <div class="col-md-6" style="text-align:center; margin: auto;">
+                    <div class="col-md-6">
+                        <p> RAJ THIS SPACE IS FOR YOU </p>
+                    </div>
+                    <div class="col-md-12" style="padding-top:10px; margin: auto; text-align:center;">
                         <?php 
                             if($_SESSION['type']=='1'){
                         ?>
-                            <form method="POST" style="margin:auto;">
+                            <form method="POST" style="margin:0auto;">
                                 <input type="hidden" name="buyerId" value="<?php echo $buyerId;?>">
                                 <input type="hidden" name="resaleId" value="<?php echo $searchedHouse['resaleId'];?>">
                                 <input type="hidden" name="resaleTown" value="<?php echo $searchedHouse['town'];?>">
-                                <input type="submit" style ="border-radius: 12px; background-color:yellow; font-family:Roboto;" class="button" name="interestedhouse" value="Contact Seller">
+                                <input type="submit" style ="border-radius: 12px; background-color:yellow; font-family:Roboto;" class="button" name="interestedhouse" value="Contact Agent">
                             </form>
                         <?php 
                             }
                             else{
                         ?>
-                            <button disabled>Please Sign In to Contact Seller</button>
+                            <button disabled>Please Sign In to Contact Agent</button>
                         <?php
                             }
                         ?>
