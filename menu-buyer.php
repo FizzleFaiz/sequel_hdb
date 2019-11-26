@@ -38,13 +38,13 @@
                       <span class="sr-only">(current)</span>
                   </a>
               </li>
-              <li class="nav-item">
+<!--              <li class="nav-item">
                   <a class="nav-link" href="grants.php">
                     <i class="fa fa-usd"></i>
                     Grants
                     <span class="sr-only">(current)</span>
                 </a>
-              </li>
+              </li>-->
               <li class="nav-item">
                 <a class="nav-link" href="statistics.php">
                     <i class="fa fa-bar-chart"></i>
