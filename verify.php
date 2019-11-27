@@ -29,13 +29,20 @@ include 'connection.php'
 	// Verify data
 	$email = mysqli_escape_string($conn,$_GET['email']); // Set email variable
 	$code = mysqli_escape_string($conn,$_GET['code']); // Set hash variable
-        $search = mysqli_query($conn,"SELECT email, hash, verified FROM buyer WHERE email='".$email."' AND hash='".$code."' AND verified='0'") or die(mysqli_error($conn));
+        $search = mysqli_query($conn,"SELECT "
+                . "email, hash, verified "
+                . "FROM buyer WHERE email='".$email."' "
+                . "AND hash='".$code."' AND verified='0'") 
+                or die(mysqli_error($conn));
         $match = mysqli_num_rows($search);
 	
 			
 	if($match > 0){
 		// We have a match, activate the account
-		mysqli_query($conn,"UPDATE buyer SET verified='1' WHERE email='".$email."' AND hash='".$code."' AND verified='0'") or die(mysqli_error($conn));
+		mysqli_query($conn,"UPDATE buyer SET verified='1' "
+                        . "WHERE email='".$email."' "
+                        . "AND hash='".$code."' "
+                        . "AND verified='0'") or die(mysqli_error($conn));
 		echo '<div class="statusmsg">Your account has been activated, you can now login</div>'
                 . '<a href="login_form.php"><button>Click here to Login</button></a>';
 	}else{

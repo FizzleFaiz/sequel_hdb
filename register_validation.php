@@ -113,8 +113,14 @@ require 'PHPMailer/src/SMTP.php';
                         $codeSQL = md5(rand(0,1000)); //Generate random 32 character has and assign it
 
                         
-                        $sql = "INSERT INTO buyer (name,age,married,parentLocation,citizenship,income,firstTime,password,email,hash)"
-                                . "VALUES ('$nameSQL','$ageSQL','$marriedSQL','$parentLocSQL','$citizenSQL','$incomeSQL','$ftSQL','$pwdSQL','$emailSQL','$codeSQL')";
+                        $sql = "INSERT INTO buyer (name,age,married,"
+                                . "parentLocation,citizenship,"
+                                . "income,firstTime,password,email,hash)"
+                                . "VALUES ('$nameSQL','$ageSQL','$marriedSQL',"
+                                . "'$parentLocSQL','$citizenSQL',"
+                                . "'$incomeSQL','$ftSQL','$pwdSQL',"
+                                . "'$emailSQL','$codeSQL')";
+                        
                         if (!mysqli_query($conn,$sql)) {
                             die('Error: ' . mysqli_error($conn));
                         }

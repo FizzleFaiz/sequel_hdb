@@ -191,16 +191,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                         ." AND aboveAge35 = '".$isAboveAge."' AND locationNearParents = '".$nearP."' "
                                         ." AND (flatType ='".$flatTYPE."' OR flatType ='n/a') "
                                         ." AND (incomeFloor <= ".$income." AND incomeCeiling >=".$income.")";
-                                if($result = mysqli_query($conn,$fetchGrantDetails)){
-                                    echo '<h5>Possible Housing Grant you can be eligible for.</h3>';
-                                    echo '<h6>For more information on the individual grants, please visit our Grants tab</h4>';
+                                $result = mysqli_query($conn,$fetchGrantDetails);
+                                echo '<h5>Possible Housing Grant you can be eligible for.</h3>';
+                                $num = mysqli_num_rows($result);
+                                if ($num > 0){
                                     while($row = mysqli_fetch_assoc($result)){
                                         echo '<div>'.$row["grantType"].'</div>';
-                                         echo '<small>Amount Claimable: $'.$row["grantAmount"].'</small>';
+                                        echo '<small>Amount Claimable: $'.$row["grantAmount"].'</small>';
                                     }
-                                }else{
+                                }
+                                else{
                                     echo '<h5>You are not eligible for any of the Housing Grants.</h3>';
-                                    echo '<h6>For more information on the individual grants, please visit our Grants tab</h4>';
                                 }
                                // echo $output;
                                 //include 'menu-buyer.php'; 

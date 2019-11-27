@@ -39,7 +39,10 @@ $conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
                 $password = mysqli_real_escape_string($conn,$_POST['pwd']);
                 $group = mysqli_real_escape_string($conn,$_POST['group']);
                 if($group === 'buyer'){
-                    $search = mysqli_query($conn,"SELECT * FROM buyer WHERE email ='".$email."' AND password='".$password."' AND verified =1") or die(mysqli_error($conn));
+                    $search = mysqli_query($conn,"SELECT * FROM buyer "
+                            . "WHERE email ='".$email."' "
+                            . "AND password='".$password."' "
+                            . "AND verified =1") or die(mysqli_error($conn));
                     $_SESSION['type'] = '1';
                 }
 
@@ -51,7 +54,11 @@ $conn = mysqli_connect($dsn, $dbuser, $dbpwd, $db);
                      $_SESSION['seller'] = $value;
                      $_SESSION['sellerId'] = $email;
                      $_SESSION['type'] = '2';
-                     $search = mysqli_query($conn,"SELECT * FROM seller WHERE sellerId ='".$email."' AND password='".$password."'") or die(mysqli_error($conn));
+                     $search = mysqli_query($conn,"SELECT * FROM seller "
+                             . "WHERE sellerId ='".$email."' "
+                             . "AND password='".$password."' "
+                             . "AND isAgent= 1") 
+                             or die(mysqli_error($conn));
                 }
                 
                     

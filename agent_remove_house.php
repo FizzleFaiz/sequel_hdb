@@ -8,7 +8,9 @@
 include 'connection.php';
 session_start();
 if (isset($_POST['Remove'])){
-    mysqli_query($conn, 'DELETE FROM resale_putup WHERE resaleId = '.$_POST['removeResaleId'].' AND sellerId = "'.$_SESSION['sellerId'].'"');
+    mysqli_query($conn, 'DELETE FROM resale_putup '
+            . 'WHERE resaleId = "'.$_POST['removeResaleId'].'" '
+            . 'AND sellerId = "'.$_SESSION['sellerId'].'"');
 }
 ?>
 <html>
@@ -54,10 +56,13 @@ if (isset($_POST['Remove'])){
                     }
                 }
                 else{
-                    $query = mysqli_query($conn,'SELECT * FROM resale_putup WHERE available = 0 AND sellerId = "'.$_SESSION['sellerId'].'"') or die(mysqli_error($conn));
+                    $query = mysqli_query($conn,'SELECT * '
+                            . 'FROM resale_putup '
+                            . 'WHERE available = 0 '
+                            . 'AND sellerId = "'.$_SESSION['sellerId'].'"') 
+                            or die(mysqli_error($conn));
                     $num = mysqli_num_rows($query);
                 }
-                
                 if ($num > 0){
                     echo '<table style="font-family: arial, sans-serif; border-collapse: collapse; width: 100%;">
                         <tr style="background-color: #dddddd;">

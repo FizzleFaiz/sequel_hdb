@@ -8,10 +8,14 @@
 include 'connection.php';
 session_start();
 if (isset($_POST['+'])){
-    mysqli_query($conn, 'UPDATE resale_putup SET available = 1 WHERE resaleId = '.$_POST['updateResaleId'].' AND sellerId = "'.$_SESSION['sellerId'].'"');
+    mysqli_query($conn, 'UPDATE resale_putup SET available = 1 '
+            . 'WHERE resaleId = '.$_POST['updateResaleId'].' '
+            . 'AND sellerId = "'.$_SESSION['sellerId'].'"');
 }
 if (isset($_POST['-'])){
-    mysqli_query($conn, 'UPDATE resale_putup SET available = 0 WHERE resaleId = '.$_POST['updateResaleId'].' AND sellerId = "'.$_SESSION['sellerId'].'"');
+    mysqli_query($conn, 'UPDATE resale_putup SET available = 0 '
+            . 'WHERE resaleId = '.$_POST['updateResaleId'].' '
+            . 'AND sellerId = "'.$_SESSION['sellerId'].'"');
 }
 ?>
 <html>
@@ -57,7 +61,9 @@ if (isset($_POST['-'])){
                     }
                 }
                 else{
-                    $query = mysqli_query($conn,'SELECT * FROM resale_putup WHERE sellerId = "'.$_SESSION['sellerId'].'"') or die(mysqli_error($conn));
+                    $query = mysqli_query($conn,'SELECT * FROM resale_putup '
+                            . 'WHERE sellerId = "'.$_SESSION['sellerId'].'"') 
+                            or die(mysqli_error($conn));
                     $num = mysqli_num_rows($query);
                 }
                 
